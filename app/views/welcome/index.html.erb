@@ -1,0 +1,32 @@
+<style>
+  	body {
+		background: url('images/bg.jpg') #fff;
+  		background-size: 1440px 800px;
+  		background-repeat:no-repeat;
+	}
+  </style>
+<div class="container" style="min-height:550px" align="center">
+<div class="lead">
+        <div class="lead pull-right" style="margin:80px 30px 0 0; background-color:#333; opacity: 0.8; padding:15px 25px; color:#fff;">
+        	<h1>Create Your Artist Profile</h1>
+            <hr>
+            <h2>Include your Soundcloud songs</h2>
+            <hr>
+            <h3>Your Instagram photos</h3>
+            <hr>
+            <h4>YouTube videos, upcoming concerts and more</h4>
+            <div style="padding:15px 0;" class="connect-with-soundcloud <%= "connected" if logged_in? %>">
+                <%= link_to "Connect With SoundCloud",    soundcloud_connect_path, :class => "connect" %>
+                <%= link_to "Disconnect From SoundCloud", soundcloud_disconnect_path, :class => "disconnect" %>
+                <span class="current-user">
+                    You are logged in as:
+                    <span class="username"><%= current_user.soundcloud_username if logged_in? %></span>
+                </span>
+            </div>
+            <div class="visible-when-logged-in <%= "hidden" unless logged_in? %>"">
+                <%= link_to "Check out your profile", you_path %>
+            </div>
+        </div>
+</div>
+
+</div> <!-- /container -->

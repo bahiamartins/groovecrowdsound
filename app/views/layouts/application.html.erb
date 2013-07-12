@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GrooveCrowd - Where Artists Get Together</title>
+  <!--<script src="http://connect.soundcloud.com/base.js"></script>-->
+  <%= stylesheet_link_tag 'http://soundcloudfront.com/stylesheets/style.css', 'application', 'soundcloud' %>
+  <%= stylesheet_link_tag 'style.css'%>
+  <%= stylesheet_link_tag 'bootstrap.css', 'application'%>
+  <%= stylesheet_link_tag 'bootstrap-responsive.css', 'application'%>
+  <%= javascript_include_tag 'jquery-1.5.min', 'connect', 'application' %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Groove Crowd</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">Artists</a></li>
+              <li><a href="#">News</a></li>
+            </ul>
+            <!--<form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email">
+              <input class="span2" type="password" placeholder="Password">
+              <button type="submit" class="btn">Sign in</button>
+            </form>-->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <%= yield %>
+    <footer>
+    	<div class="container">
+          <p style="font-size:12px">&copy; GrooveCrowd 2013 - All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,1420 @@
+  [1m[36mSQL (0.5ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (17.1ms)[0m  select sqlite_version(*)
+  [1m[36mSQL (12.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35mSQL (0.1ms)[0m  PRAGMA index_list("schema_migrations")
+  [1m[36mSQL (2.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mSQL (0.2ms)[0m   SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+Migrating to CreateUsers (20110217210150)
+  [1m[36mSQL (0.6ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "soundcloud_user_id" integer, "soundcloud_username" varchar(255), "soundcloud_access_token" varchar(255), "soundcloud_refresh_token" varchar(255), "soundcloud_expires_at" datetime, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20110217210150')
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.1ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations"
+  [1m[36mSQL (0.1ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mSQL (0.0ms)[0m  PRAGMA index_list("users")
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 13:44:22 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 141ms (Views: 20.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 13:45:54 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 10ms
+
+
+Started GET "/soundcloud/connected?code=8a100aaa219efac3b04a28eaac2aab2d" for 127.0.0.1 at 2013-07-12 13:46:02 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"8a100aaa219efac3b04a28eaac2aab2d"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 1914010 LIMIT 1[0m
+  [1m[35mAREL (0.5ms)[0m  INSERT INTO "users" ("soundcloud_user_id", "soundcloud_username", "soundcloud_access_token", "soundcloud_refresh_token", "soundcloud_expires_at", "created_at", "updated_at") VALUES (1914010, 'Ronaldo Bahia', NULL, NULL, NULL, '2013-07-12 16:46:05.221484', '2013-07-12 16:46:05.221484')
+  [1m[36mAREL (0.3ms)[0m  [1mUPDATE "users" SET "soundcloud_access_token" = '1-45623-1914010-e259fdda6e3cd966', "soundcloud_refresh_token" = '9f940e9a4fb408b9243fbf84f37c82aa', "soundcloud_expires_at" = '2013-07-12 22:46:02.927188', "updated_at" = '2013-07-12 16:46:05.282073' WHERE "users"."id" = 1[0m
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed 200 OK in 3196ms (Views: 2.5ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 13:46:09 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1331373477885801166_70318496344880__857698702162627482 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 3072ms (Views: 8.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 14:20:36 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1331373477885801166_70318494647140__857698702162627482 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 4173ms (Views: 11.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/facebook.png" for 127.0.0.1 at 2013-07-12 14:21:05 -0300
+
+ActionController::RoutingError (No route matches "/facebook.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (2.4ms)
+
+
+Started GET "/twitter.png" for 127.0.0.1 at 2013-07-12 14:21:05 -0300
+
+ActionController::RoutingError (No route matches "/twitter.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.0ms)
+
+
+Started GET "/googleplus.png" for 127.0.0.1 at 2013-07-12 14:21:05 -0300
+
+ActionController::RoutingError (No route matches "/googleplus.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.0ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 14:21:06 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1331373477885801166_70318504055340__857698702162627482 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 2798ms (Views: 9.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/facebook.png" for 127.0.0.1 at 2013-07-12 14:21:52 -0300
+
+ActionController::RoutingError (No route matches "/facebook.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/twitter.png" for 127.0.0.1 at 2013-07-12 14:21:52 -0300
+
+ActionController::RoutingError (No route matches "/twitter.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+
+
+Started GET "/googleplus.png" for 127.0.0.1 at 2013-07-12 14:21:52 -0300
+
+ActionController::RoutingError (No route matches "/googleplus.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 14:24:27 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1331373477885801166_70318502893020__857698702162627482 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 3314ms (Views: 8.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/facebook.png" for 127.0.0.1 at 2013-07-12 14:25:43 -0300
+
+ActionController::RoutingError (No route matches "/facebook.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (2.3ms)
+
+
+Started GET "/twitter.png" for 127.0.0.1 at 2013-07-12 14:25:43 -0300
+
+ActionController::RoutingError (No route matches "/twitter.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (2.6ms)
+
+
+Started GET "/googleplus.png" for 127.0.0.1 at 2013-07-12 14:25:43 -0300
+
+ActionController::RoutingError (No route matches "/googleplus.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (2.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 14:29:02 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1331373477885801166_70318513346000__857698702162627482 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 3183ms (Views: 9.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/facebook.png" for 127.0.0.1 at 2013-07-12 14:30:21 -0300
+
+ActionController::RoutingError (No route matches "/facebook.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/twitter.png" for 127.0.0.1 at 2013-07-12 14:30:21 -0300
+
+ActionController::RoutingError (No route matches "/twitter.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.3ms)
+
+
+Started GET "/googleplus.png" for 127.0.0.1 at 2013-07-12 14:30:21 -0300
+
+ActionController::RoutingError (No route matches "/googleplus.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 14:50:25 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mUser Load (14.5ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (39.3ms)
+Completed 200 OK in 122ms (Views: 44.1ms | ActiveRecord: 14.8ms)
+
+
+Started GET "/javascripts/instafeed.min.js" for 127.0.0.1 at 2013-07-12 14:50:26 -0300
+
+ActionController::RoutingError (No route matches "/javascripts/instafeed.min.js"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+
+
+Started GET "/soundcloud/disconnect" for 127.0.0.1 at 2013-07-12 14:51:56 -0300
+  Processing by SoundcloudController#disconnect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 10ms
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 14:51:56 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 48ms (Views: 8.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/javascripts/instafeed.min.js" for 127.0.0.1 at 2013-07-12 14:51:56 -0300
+
+ActionController::RoutingError (No route matches "/javascripts/instafeed.min.js"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 14:53:19 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 11ms
+
+
+Started GET "/soundcloud/connected?code=978c5d3452783909d9a6f58d4e32fa3b" for 127.0.0.1 at 2013-07-12 14:53:30 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"978c5d3452783909d9a6f58d4e32fa3b"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1[0m
+  [1m[35mAREL (16.7ms)[0m  INSERT INTO "users" ("soundcloud_user_id", "soundcloud_username", "soundcloud_access_token", "soundcloud_refresh_token", "soundcloud_expires_at", "created_at", "updated_at") VALUES (23200247, 'Maria Melodia', NULL, NULL, NULL, '2013-07-12 17:53:32.850140', '2013-07-12 17:53:32.850140')
+  [1m[36mAREL (0.4ms)[0m  [1mUPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-674e08a6c9bfdfe', "soundcloud_refresh_token" = 'd483d6bb116e9aebdb6714c2dcbd340f', "soundcloud_expires_at" = '2013-07-12 23:53:30.759645', "updated_at" = '2013-07-12 17:53:32.913434' WHERE "users"."id" = 2[0m
+Rendered soundcloud/connected.html.erb (1.1ms)
+Completed 200 OK in 2908ms (Views: 32.8ms | ActiveRecord: 17.6ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 14:53:43 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1370932614347636405_70108905723520__2304374725567633425 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 2594ms (Views: 10.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/javascripts/instafeed.min.js" for 127.0.0.1 at 2013-07-12 14:53:46 -0300
+
+ActionController::RoutingError (No route matches "/javascripts/instafeed.min.js"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.6ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:01:14 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1370932614347636405_70108909254500__2304374725567633425 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 2660ms (Views: 10.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/javascripts/instafeed.min.js" for 127.0.0.1 at 2013-07-12 15:01:17 -0300
+
+ActionController::RoutingError (No route matches "/javascripts/instafeed.min.js"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.1ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:04:18 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1370932614347636405_70108908993420__2304374725567633425 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 2730ms (Views: 13.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/javascripts/instafeed.min.js" for 127.0.0.1 at 2013-07-12 15:04:22 -0300
+
+ActionController::RoutingError (No route matches "/javascripts/instafeed.min.js"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.0ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:06:30 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__1370932614347636405_70108908597660__2304374725567633425 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 2284ms (Views: 10.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:13:32 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Completed   in 1467ms
+
+Soundcloud::ResponseError (HTTP status: 404):
+  app/controllers/welcome_controller.rb:6:in `show'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.6ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (5.5ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (14.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 15:14:26 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mSQL (0.2ms)[0m  [1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (10.5ms)
+Completed 200 OK in 58ms (Views: 15.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:15:47 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193750568360__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 3579ms (Views: 9.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:17:45 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193766864160__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 2381ms (Views: 10.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:28:54 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+ERROR: compiling _app_views_welcome_show_html_erb__304048352867067792_70193749053000__1451581328539057047 RAISED /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ':', expecting ')'
+...url, :class => "img-polaroid" :size => "210x210") );@output_...
+...                               ^
+/Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ')', expecting keyword_end
+...polaroid" :size => "210x210") );@output_buffer.safe_concat('
+...                               ^
+Function body:           def _app_views_welcome_show_html_erb__304048352867067792_70193749053000__1451581328539057047(local_assigns)
+            _old_virtual_path, @_virtual_path = @_virtual_path, "welcome/show";_old_output_buffer = @output_buffer;;@output_buffer = ActionView::OutputBuffer.new;@output_buffer.safe_concat('<!--<div class="infos">
+  <div class="details">
+    <b>Your SoundCloud User Infos:</b>
+    <ul>
+      <li>Username: ');@output_buffer.append= ( @me.username );@output_buffer.safe_concat('</li>
+      <li>Fullname: ');@output_buffer.append= ( @me.full_name );@output_buffer.safe_concat('</li>
+      <li>Location: ');@output_buffer.append= ( @me.city );@output_buffer.safe_concat(', ');@output_buffer.append= ( @me.country );@output_buffer.safe_concat('</li>
+    </ul>
+  </div>
+  ');@output_buffer.append= ( image_tag(@me.avatar_url, :class => "avatar") );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  
+</div>
+
+<div class="description">
+');@output_buffer.append_if_string=    form_tag you_update_path, :method => "post" do 
+@output_buffer.safe_concat('    <b>Description:</b>
+    <textarea name="description">');@output_buffer.append= ( @me.description );@output_buffer.safe_concat('</textarea>
+    <input type="submit" value="update" />
+    <span class="warning">this will change your SoundCloud profile description!</span>
+');   end 
+@output_buffer.safe_concat('</div>
+
+<div class="tracks">
+  <b>Your 5 latest tracks</b>
+  <ul>
+');@output_buffer.append_if_string=      @tracks.each do |track| 
+@output_buffer.safe_concat('      <li>');@output_buffer.append= ( link_to track.title, track.permalink_url );@output_buffer.safe_concat('</li>
+');     end 
+@output_buffer.safe_concat('  </ul>
+</div>-->
+
+<div class="container" style="margin-top:10px;">
+    	<div class="row-fluid">
+            <div class="pull-left" style="width:228px;">
+                ');@output_buffer.append= ( image_tag(@me.avatar_url, :class => "img-polaroid" :size => "210x210") );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('            </div>
+            <div class="pull-left" style="width:940px;">
+            	<ul class="social-icons pull-right">
+                    <li><a href="#">');@output_buffer.append= ( image_tag("facebook.png", :alt => "Facebook", :size => "28x28") );@output_buffer.safe_concat('</a></li>
+                    <li><a href="#">');@output_buffer.append= ( image_tag("twitter.png", :alt => "Twitter", :size => "28x28") );@output_buffer.safe_concat('</a></li>
+                    <li><a href="#">');@output_buffer.append= ( image_tag("googleplus.png", :alt => "Google Plus", :size => "28x28") );@output_buffer.safe_concat('</a></li>
+                </ul>
+                <h2 style="line-height:25px;">');@output_buffer.append= ( @me.username );@output_buffer.safe_concat(' <br/>
+                    <small style="padding-left:2px; font-size:14px">Alternative Rock <span>- ');@output_buffer.append= ( @me.city );@output_buffer.safe_concat(', ');@output_buffer.append= ( @me.country );@output_buffer.safe_concat('</span></small>
+                </h2>
+                <iframe src="http://widget.stagram.com/in/maria_melodia/?s=120&w=7&h=1&b=1&p=5" allowtransparency="true" frameborder="0" scrolling="no" style="border:none;overflow:hidden;width:940px; height: 135px; margin-top:10px;"></iframe>
+            </div>
+        </div>
+    	<div class="row-fluid"  style="margin-top:10px;">
+        	<div class="span7">
+            	<div style="background-color:#444;padding:10px 15px; color:#fff;"><h4 style="font-weight: 200;">Recent updates</h4></div>
+            	<div class="thumbnail-text">
+                	<div class="form-inline" align="center">
+                        <form>
+                            <input type="text" class=" input-xxlarge" placeholder="Share something with your fans">
+                            <button type="submit" class="btn">Share</button>
+                            <div align="left"><small style="padding:5px 0 0 20px;"><a href="#">attach picture</a></small></div>
+                        </form>
+                    </div>
+                    <hr>
+                  <span>É o que testemunhamos neste concerto gravado no chão do Marco Zero, na ilha holandesa do Recife Velho ou Antigo, porta e farol da cidade para o mundo. Ouviram não só do Ipiranga, ouviram d´África, onde os tambores da Nação fazem reverberar o escambo de oferendas no terreiro afro-beat. 
+  
+  Mais do que um show, o DVD mostra a liga orgânica entre a cidade e a banda. Rios, pontes, overdrives e impressionantes coreografias da massa vistas por câmeras aéreas. Os “extras” completam essa lição geográfica da fome afetiva com um rolê por alguns pontos como o Mercado de São José e o bairro de Peixinhos, Olinda, de onde veio a “cozinha” percussiva do grupo. 
+  
+  No repertório, clássicos dos tempos de Chico Science são mesclados com a história da NZ até hoje. Fred 04, parceiro da origem do mangue beat; Siba com a loa-metal da sua Fuloresta; Arnaldo Antunes e Paralamas do Sucesso fazem participações especiais. 
+  
+  Este DVD é um documento digno daquela que é, desde o nascedouro, nos anos 90, a melhor e mais expressiva banda brasileira. Não é fácil se manter com essa garantia e resistência do grupo formado por Jorge Du Peixe, Pupillo, Lúcio Maia, Dengue, Toca Ogan, Gilmar Bola 8, Da Lua e Marcos Matia. - See more at: http://www.nacaozumbi.com.br/#sthash.ZkyUYww6.dpuf</span>
+                  <hr>
+                  <span>
+                  	<h3>verdade é igual mertiolate arde mas acaba funcionando como remédio também.Primeiro vem o ardor do instante, depois vem a cura pro machucado</h3>
+                    <img alt="Tumblr_mdx29xahmi1r8rt3po1_500_large" src="http://data.whicdn.com/images/44089346/tumblr_mdx29xAHmI1r8rt3po1_500_large.jpg">
+                  </span>
+                  <hr>
+                  <span><img src="http://25.media.tumblr.com/2fdac407b479dc6a4badeb17e69737ea/tumblr_mfe2adlMab1rjazmfo1_400.jpg"></span>
+                  <hr>
+				</div>
+                <div id="fb-root"></div>
+                <div style="padding-top:10px;" class="fb-comments" data-href="http://jobconvo.com" data-width="430" data-num-posts="10"></div>
+        	</div>
+        	
+        	<div class="span5" style="border-top:#ccc solid 5px;">
+            	<div style=" padding:10px 15px; background-color:#f2f2f4; text-transform:uppercase; margin-top:10px;"><b>Upcoming Concerts</b></div>
+                <table class="table table-condensed" style="font-size:12px; border-bottom:#ccc solid 5px;max-height:300px !important; overflow:auto;">
+                	<thead>
+                    	<tr>
+                        	<th>Date</th>
+                            <th>Local</th>
+                            <th>City</th>
+                            <th>Tickets</th>
+                        </tr>
+                    </thead>
+                    <tbody style="">
+                    	<tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <iframe style="width:100%" height="285" src="http://www.youtube.com/embed/wIgrPf1TCXc" frameborder="0" allowfullscreen></iframe>
+                <iframe style="width:100%" height="285" src="http://www.youtube.com/embed/cIdhtP6018g" frameborder="0" allowfullscreen></iframe>
+                <iframe style="width:100%" height="285" src="http://www.youtube.com/embed/ivDizTT0aBg" frameborder="0" allowfullscreen></iframe>
+        	</div>
+        </div>
+    </div> <!-- /container -->
+    <hr>
+    ');@output_buffer.append= ( javascript_include_tag 'instafeed.min.js' );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('    ');@output_buffer.append= ( javascript_include_tag 'http://stratus.sc/stratus.js' );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('    <script type="text/javascript">
+	  $(document).ready(function(){
+		$.stratus({
+			auto_play: false,
+			links: \'https://soundcloud.com/maria-melodia/sets/debut\',
+			random: true,
+			download: true,
+		});
+	  });
+	</script>
+	<script type="text/javascript">
+		(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=450859074991785";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, \'script\', \'facebook-jssdk\'));
+    </script>');@output_buffer.to_s
+          ensure
+            @_virtual_path, @output_buffer = _old_virtual_path, _old_output_buffer
+          end
+Backtrace: /Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:255:in `module_eval'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:255:in `compile'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:134:in `block in render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:54:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:127:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/render/rendering.rb:59:in `block in _render_template'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/render/rendering.rb:56:in `_render_template'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/render/rendering.rb:26:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:115:in `_render_template'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:109:in `render_to_body'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/renderers.rb:47:in `render_to_body'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/compatibility.rb:55:in `render_to_body'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:102:in `render_to_string'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:93:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rendering.rb:17:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/benchmark.rb:296:in `realtime'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/core_ext/benchmark.rb:5:in `ms'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:78:in `cleanup_view_runtime'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/railties/controller_runtime.rb:15:in `cleanup_view_runtime'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:39:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/implicit_render.rb:5:in `send_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/base.rb:150:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rendering.rb:11:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:440:in `_run__2624202169702309614__process_action__2710448206286686788__callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:409:in `_run_process_action_callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:93:in `run_callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/callbacks.rb:17:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rescue.rb:17:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/base.rb:119:in `process'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:41:in `process'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal.rb:138:in `dispatch'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal.rb:178:in `block in action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:62:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:62:in `dispatch'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:27:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:148:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:93:in `block in recognize'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:68:in `optimized_each'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:92:in `recognize'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:139:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:492:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/head.rb:14:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/methodoverride.rb:24:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/flash.rb:182:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/session/abstract_store.rb:149:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/cookies.rb:302:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/query_cache.rb:32:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/connection_adapters/abstract/query_cache.rb:28:in `cache'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/query_cache.rb:12:in `cache'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/query_cache.rb:31:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:354:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/callbacks.rb:46:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:415:in `_run_call_callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/callbacks.rb:44:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/sendfile.rb:107:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/remote_ip.rb:48:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/show_exceptions.rb:47:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/rack/logger.rb:13:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/runtime.rb:17:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/lock.rb:11:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/lock.rb:11:in `synchronize'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/lock.rb:11:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/static.rb:30:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/application.rb:168:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/application.rb:77:in `method_missing'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/rack/log_tailer.rb:14:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/content_length.rb:13:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/handler/webrick.rb:52:in `service'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+Rendered welcome/show.html.erb within layouts/application (60.1ms)
+Completed   in 3778ms
+
+ActionView::Template::Error (/Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ':', expecting ')'
+...url, :class => "img-polaroid" :size => "210x210") );@output_...
+...                               ^
+/Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ')', expecting keyword_end
+...polaroid" :size => "210x210") );@output_buffer.safe_concat('
+...                               ^):
+    32: <div class="container" style="margin-top:10px;">
+    33:     	<div class="row-fluid">
+    34:             <div class="pull-left" style="width:228px;">
+    35:                 <%= image_tag(@me.avatar_url, :class => "img-polaroid" :size => "210x210") %>
+    36:             </div>
+    37:             <div class="pull-left" style="width:940px;">
+    38:             	<ul class="social-icons pull-right">
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.6ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (9.5ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (27.0ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:30:59 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193751501420__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 3176ms (Views: 11.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:37:23 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193767501740__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (37.3ms)
+Completed 200 OK in 3511ms (Views: 42.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:44:36 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193766735120__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (66.4ms)
+Completed   in 3128ms
+
+ActionView::Template::Error (undefined local variable or method `playlist' for #<#<Class:0x007fae850fa038>:0x007fae850f8f58>):
+    161: 	  });
+    162: 	</script>-->
+    163:     <script type="text/JavaScript">
+    164:         SC.oEmbed("<%= link_to playlist.permalink_url %>", {color: "ff0066"},  document.getElementById("putTheWidgetHere"));
+    165:     </script>
+    166: 	<script type="text/javascript">
+    167: 		(function(d, s, id) {
+  app/views/welcome/show.html.erb:164:in `_app_views_welcome_show_html_erb__304048352867067792_70193766735120__1451581328539057047'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (8.8ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (43.4ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:45:45 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193767190120__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 2615ms (Views: 13.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 15:55:30 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193766369060__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (11.3ms)
+Completed 200 OK in 4261ms (Views: 17.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 16:03:44 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+ERROR: compiling _app_views_welcome_show_html_erb__304048352867067792_70193749247480__1451581328539057047 RAISED /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ':', expecting ')'
+...url, :class => "img-polaroid" :size => "210x210") );@output_...
+...                               ^
+/Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ')', expecting keyword_end
+...polaroid" :size => "210x210") );@output_buffer.safe_concat('
+...                               ^
+Function body:           def _app_views_welcome_show_html_erb__304048352867067792_70193749247480__1451581328539057047(local_assigns)
+            _old_virtual_path, @_virtual_path = @_virtual_path, "welcome/show";_old_output_buffer = @output_buffer;;@output_buffer = ActionView::OutputBuffer.new;@output_buffer.safe_concat('<!--<div class="infos">
+  <div class="details">
+    <b>Your SoundCloud User Infos:</b>
+    <ul>
+      <li>Username: ');@output_buffer.append= ( @me.username );@output_buffer.safe_concat('</li>
+      <li>Fullname: ');@output_buffer.append= ( @me.full_name );@output_buffer.safe_concat('</li>
+      <li>Location: ');@output_buffer.append= ( @me.city );@output_buffer.safe_concat(', ');@output_buffer.append= ( @me.country );@output_buffer.safe_concat('</li>
+    </ul>
+  </div>
+  ');@output_buffer.append= ( image_tag(@me.avatar_url, :class => "avatar") );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('  
+</div>
+
+<div class="description">
+');@output_buffer.append_if_string=    form_tag you_update_path, :method => "post" do 
+@output_buffer.safe_concat('    <b>Description:</b>
+    <textarea name="description">');@output_buffer.append= ( @me.description );@output_buffer.safe_concat('</textarea>
+    <input type="submit" value="update" />
+    <span class="warning">this will change your SoundCloud profile description!</span>
+');   end 
+@output_buffer.safe_concat('</div>
+
+<div class="tracks">
+  <b>Your 5 latest tracks</b>
+  <ul>
+');@output_buffer.append_if_string=      @tracks.each do |track| 
+@output_buffer.safe_concat('      <li>');@output_buffer.append= ( link_to track.title, track.permalink_url );@output_buffer.safe_concat('</li>
+');     end 
+@output_buffer.safe_concat('  </ul>
+</div>-->
+
+<div class="container" style="margin-top:10px;">
+    	<div class="row-fluid">
+            <div class="pull-left" style="width:228px;">
+                ');@output_buffer.append= ( image_tag(@me.avatar_url, :class => "img-polaroid" :size => "210x210") );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('            </div>
+            <div class="pull-left" style="width:940px;">
+            	<ul class="social-icons pull-right">
+                    <li><a href="#">');@output_buffer.append= ( image_tag("facebook.png", :alt => "Facebook", :size => "28x28") );@output_buffer.safe_concat('</a></li>
+                    <li><a href="#">');@output_buffer.append= ( image_tag("twitter.png", :alt => "Twitter", :size => "28x28") );@output_buffer.safe_concat('</a></li>
+                    <li><a href="#">');@output_buffer.append= ( image_tag("googleplus.png", :alt => "Google Plus", :size => "28x28") );@output_buffer.safe_concat('</a></li>
+                </ul>
+                <h2 style="line-height:25px;">');@output_buffer.append= ( @me.username );@output_buffer.safe_concat(' <br/>
+                    <small style="padding-left:2px; font-size:14px">Alternative Rock <span>- ');@output_buffer.append= ( @me.city );@output_buffer.safe_concat(', ');@output_buffer.append= ( @me.country );@output_buffer.safe_concat('</span></small>
+                </h2>
+                <iframe src="http://widget.stagram.com/in/maria_melodia/?s=120&w=7&h=1&b=1&p=5" allowtransparency="true" frameborder="0" scrolling="no" style="border:none;overflow:hidden;width:940px; height: 135px; margin-top:10px;"></iframe>
+            </div>
+        </div>
+    	<div class="row-fluid"  style="margin-top:10px;">
+        	<div class="span7">
+            	<div style="background-color:#444;padding:10px 15px; color:#fff;"><h4 style="font-weight: 200;">Recent updates</h4></div>
+            	<div class="thumbnail-text">
+                	<div class="form-inline" align="center">
+                        <form>
+                            <input type="text" class=" input-xxlarge" placeholder="Share something with your fans">
+                            <button type="submit" class="btn">Share</button>
+                            <div align="left"><small style="padding:5px 0 0 20px;"><a href="#">attach picture</a></small></div>
+                        </form>
+                    </div>
+                    <hr>
+                  <span>É o que testemunhamos neste concerto gravado no chão do Marco Zero, na ilha holandesa do Recife Velho ou Antigo, porta e farol da cidade para o mundo. Ouviram não só do Ipiranga, ouviram d´África, onde os tambores da Nação fazem reverberar o escambo de oferendas no terreiro afro-beat. 
+  
+  Mais do que um show, o DVD mostra a liga orgânica entre a cidade e a banda. Rios, pontes, overdrives e impressionantes coreografias da massa vistas por câmeras aéreas. Os “extras” completam essa lição geográfica da fome afetiva com um rolê por alguns pontos como o Mercado de São José e o bairro de Peixinhos, Olinda, de onde veio a “cozinha” percussiva do grupo. 
+  
+  No repertório, clássicos dos tempos de Chico Science são mesclados com a história da NZ até hoje. Fred 04, parceiro da origem do mangue beat; Siba com a loa-metal da sua Fuloresta; Arnaldo Antunes e Paralamas do Sucesso fazem participações especiais. 
+  
+  Este DVD é um documento digno daquela que é, desde o nascedouro, nos anos 90, a melhor e mais expressiva banda brasileira. Não é fácil se manter com essa garantia e resistência do grupo formado por Jorge Du Peixe, Pupillo, Lúcio Maia, Dengue, Toca Ogan, Gilmar Bola 8, Da Lua e Marcos Matia. - See more at: http://www.nacaozumbi.com.br/#sthash.ZkyUYww6.dpuf</span>
+                  <hr>
+                  <span>
+                  	<h3>verdade é igual mertiolate arde mas acaba funcionando como remédio também.Primeiro vem o ardor do instante, depois vem a cura pro machucado</h3>
+                    <img alt="Tumblr_mdx29xahmi1r8rt3po1_500_large" src="http://data.whicdn.com/images/44089346/tumblr_mdx29xAHmI1r8rt3po1_500_large.jpg">
+                  </span>
+                  <hr>
+                  <span><img src="http://25.media.tumblr.com/2fdac407b479dc6a4badeb17e69737ea/tumblr_mfe2adlMab1rjazmfo1_400.jpg"></span>
+                  <hr>
+				</div>
+                <div id="fb-root"></div>
+                <div style="padding-top:10px;" class="fb-comments" data-href="http://jobconvo.com" data-width="430" data-num-posts="10"></div>
+        	</div>
+        	
+        	<div class="span5" style="border-top:#ccc solid 5px;">
+            	<div style=" padding:10px 15px; background-color:#f2f2f4; text-transform:uppercase; margin-top:10px;"><b>Upcoming Concerts</b></div>
+                <table class="table table-condensed" style="font-size:12px; border-bottom:#ccc solid 5px;max-height:300px !important; overflow:auto;">
+                	<thead>
+                    	<tr>
+                        	<th>Date</th>
+                            <th>Local</th>
+                            <th>City</th>
+                            <th>Tickets</th>
+                        </tr>
+                    </thead>
+                    <tbody style="">
+                    	<tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                        <tr>
+                        	<td>01-ago-13</td>
+                            <td>Music Hall</td>
+                            <td>Belo Horizonte, Brasil</td>
+                            <td><a href="#" target="_blank" class="btn btn-mini btn-danger">Buy tickets</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <iframe style="width:100%" height="285" src="http://www.youtube.com/embed/wIgrPf1TCXc" frameborder="0" allowfullscreen></iframe>
+                <iframe style="width:100%" height="285" src="http://www.youtube.com/embed/cIdhtP6018g" frameborder="0" allowfullscreen></iframe>
+                <iframe style="width:100%" height="285" src="http://www.youtube.com/embed/ivDizTT0aBg" frameborder="0" allowfullscreen></iframe>
+        	</div>
+        </div>
+    </div> <!-- /container -->
+    <hr>
+    ');@output_buffer.append= ( javascript_include_tag 'instafeed.min.js' );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('    ');@output_buffer.append= ( javascript_include_tag 'http://stratus.sc/stratus.js' );@output_buffer.safe_concat('
+');@output_buffer.safe_concat('    <script type="text/javascript">
+	  $(document).ready(function(){
+		$.stratus({
+			auto_play: false,
+			links: \'https://soundcloud.com/maria-melodia/sets/debut\',
+			random: true,
+			download: true,
+		});
+	  });
+	</script>
+	<script type="text/javascript">
+		(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=450859074991785";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, \'script\', \'facebook-jssdk\'));
+    </script>');@output_buffer.to_s
+          ensure
+            @_virtual_path, @output_buffer = _old_virtual_path, _old_output_buffer
+          end
+Backtrace: /Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:255:in `module_eval'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:255:in `compile'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:134:in `block in render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:54:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/template.rb:127:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/render/rendering.rb:59:in `block in _render_template'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/render/rendering.rb:56:in `_render_template'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_view/render/rendering.rb:26:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:115:in `_render_template'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:109:in `render_to_body'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/renderers.rb:47:in `render_to_body'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/compatibility.rb:55:in `render_to_body'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:102:in `render_to_string'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:93:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rendering.rb:17:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/benchmark.rb:296:in `realtime'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/core_ext/benchmark.rb:5:in `ms'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:78:in `cleanup_view_runtime'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/railties/controller_runtime.rb:15:in `cleanup_view_runtime'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:39:in `render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/implicit_render.rb:5:in `send_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/base.rb:150:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rendering.rb:11:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:440:in `_run__2624202169702309614__process_action__2710448206286686788__callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:409:in `_run_process_action_callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:93:in `run_callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/callbacks.rb:17:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `block in instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/notifications.rb:52:in `instrument'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rescue.rb:17:in `process_action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/base.rb:119:in `process'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/abstract_controller/rendering.rb:41:in `process'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal.rb:138:in `dispatch'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_controller/metal.rb:178:in `block in action'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:62:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:62:in `dispatch'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:27:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:148:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:93:in `block in recognize'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:68:in `optimized_each'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/code_generation.rb:92:in `recognize'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-mount-0.6.13/lib/rack/mount/route_set.rb:139:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/routing/route_set.rb:492:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/head.rb:14:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/methodoverride.rb:24:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/flash.rb:182:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/session/abstract_store.rb:149:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/cookies.rb:302:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/query_cache.rb:32:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/connection_adapters/abstract/query_cache.rb:28:in `cache'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/query_cache.rb:12:in `cache'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/query_cache.rb:31:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activerecord-3.0.4/lib/active_record/connection_adapters/abstract/connection_pool.rb:354:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/callbacks.rb:46:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/callbacks.rb:415:in `_run_call_callbacks'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/callbacks.rb:44:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/sendfile.rb:107:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/remote_ip.rb:48:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/show_exceptions.rb:47:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/rack/logger.rb:13:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/runtime.rb:17:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/activesupport-3.0.4/lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/lock.rb:11:in `block in call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/lock.rb:11:in `synchronize'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/lock.rb:11:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/static.rb:30:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/application.rb:168:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/application.rb:77:in `method_missing'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/railties-3.0.4/lib/rails/rack/log_tailer.rb:14:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/content_length.rb:13:in `call'
+/Users/ronaldobahia/ruby-sites/soundcloud/vendor/bundle/gems/rack-1.2.1/lib/rack/handler/webrick.rb:52:in `service'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:138:in `service'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/webrick/httpserver.rb:94:in `run'
+/Users/ronaldobahia/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/webrick/server.rb:295:in `block in start_thread'
+Rendered welcome/show.html.erb within layouts/application (1.9ms)
+Completed   in 3053ms
+
+ActionView::Template::Error (/Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ':', expecting ')'
+...url, :class => "img-polaroid" :size => "210x210") );@output_...
+...                               ^
+/Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:35: syntax error, unexpected ')', expecting keyword_end
+...polaroid" :size => "210x210") );@output_buffer.safe_concat('
+...                               ^):
+    32: <div class="container" style="margin-top:10px;">
+    33:     	<div class="row-fluid">
+    34:             <div class="pull-left" style="width:228px;">
+    35:                 <%= image_tag(@me.avatar_url, :class => "img-polaroid" :size => "210x210") %>
+    36:             </div>
+    37:             <div class="pull-left" style="width:940px;">
+    38:             	<ul class="social-icons pull-right">
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.3ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (9.0ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (15.8ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 16:04:58 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193750503440__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (7.5ms)
+Completed 200 OK in 3209ms (Views: 15.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 16:15:37 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193767450840__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.3ms)
+Completed 200 OK in 3548ms (Views: 9.4ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/images/bg.png" for 127.0.0.1 at 2013-07-12 16:16:57 -0300
+
+ActionController::RoutingError (No route matches "/images/bg.png"):
+  
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 16:46:00 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (9.0ms)
+Completed 200 OK in 27ms (Views: 14.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 16:47:27 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Rendered welcome/index.html.erb within layouts/application (9.1ms)
+Completed 200 OK in 25ms (Views: 14.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/soundcloud/disconnect" for 127.0.0.1 at 2013-07-12 17:05:39 -0300
+  Processing by SoundcloudController#disconnect as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Redirected to http://localhost:3000/
+Completed 302 Found in 11ms
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:05:39 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Rendered welcome/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 18ms (Views: 8.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:11:30 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 18ms (Views: 8.6ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:24:28 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Rendered welcome/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 17ms (Views: 7.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:27:21 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 18ms (Views: 8.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:32:06 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Rendered welcome/index.html.erb within layouts/application (34.1ms)
+Completed 200 OK in 48ms (Views: 38.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:36:12 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 18ms (Views: 8.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:40:37 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Rendered welcome/index.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 19ms (Views: 8.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 17:45:24 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 42ms
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 17:45:41 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 11ms
+
+
+Started GET "/soundcloud/connected?code=89c9b661002d5cb8d6590b979f6faf50" for 127.0.0.1 at 2013-07-12 17:45:44 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"89c9b661002d5cb8d6590b979f6faf50"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1[0m
+  [1m[35mAREL (13.5ms)[0m  UPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-02b37f5bbe4c13a', "soundcloud_refresh_token" = '3f1d38d404aefca3977e3857bcb45f38', "soundcloud_expires_at" = '2013-07-13 02:45:45.480225', "updated_at" = '2013-07-12 20:45:47.710141' WHERE "users"."id" = 2
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed 200 OK in 3041ms (Views: 3.4ms | ActiveRecord: 14.4ms)
+
+
+Started GET "/soundcloud/disconnect" for 127.0.0.1 at 2013-07-12 17:46:24 -0300
+  Processing by SoundcloudController#disconnect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 10ms
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:46:24 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 18ms (Views: 8.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 17:50:33 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Rendered welcome/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 18ms (Views: 7.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 17:55:42 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 87ms
+
+
+Started GET "/soundcloud/connected?code=231b7b27416a33089de6492e0d2f0ddc" for 127.0.0.1 at 2013-07-12 17:55:46 -0300
+  Processing by WelcomeController#show as HTML
+  Parameters: {"code"=>"231b7b27416a33089de6492e0d2f0ddc"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Completed   in 10ms
+
+NoMethodError (undefined method `soundcloud_client' for nil:NilClass):
+  app/controllers/welcome_controller.rb:6:in `show'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.7ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.5ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (17.0ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 17:56:11 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Completed   in 21ms
+
+ActionController::RoutingError (No route matches {:controller=>"welcome", :action=>"show"}):
+  app/controllers/soundcloud_controller.rb:34:in `soundcloud_client'
+  app/controllers/soundcloud_controller.rb:3:in `connect'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (1.2ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 17:57:28 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 20ms
+
+
+Started GET "/soundcloud/connected?code=77cac0cc68ca4e8859b12e3c103140d8" for 127.0.0.1 at 2013-07-12 17:57:32 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"77cac0cc68ca4e8859b12e3c103140d8"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  UPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-4c5a97f846cb670', "soundcloud_refresh_token" = '9defa0008be7d6b9be56020f237aa3d8', "soundcloud_expires_at" = '2013-07-13 02:57:33.523005', "updated_at" = '2013-07-12 20:57:35.699715' WHERE "users"."id" = 2
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed 200 OK in 2916ms (Views: 2.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 17:59:34 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+DEPRECATION WARNING: <% %> style block helpers are deprecated. Please use <%= %>. (called from _app_views_welcome_show_html_erb__304048352867067792_70193766652580__1451581328539057047 at /Users/ronaldobahia/ruby-sites/soundcloud/app/views/welcome/show.html.erb:15)
+Rendered welcome/show.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 2483ms (Views: 23.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 18:08:28 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (43.0ms)
+Completed 200 OK in 58ms (Views: 48.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/soundcloud/disconnect" for 127.0.0.1 at 2013-07-12 18:10:44 -0300
+  Processing by SoundcloudController#disconnect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 12ms
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 18:10:44 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Rendered welcome/index.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 21ms (Views: 10.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 18:12:03 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 24ms
+
+
+Started GET "/soundcloud/connected?code=d41f4530ecc909eddd9a0399fd172112" for 127.0.0.1 at 2013-07-12 18:12:26 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"d41f4530ecc909eddd9a0399fd172112"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1[0m
+  [1m[35mAREL (33.8ms)[0m  UPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-9c6ad96a593f998', "soundcloud_refresh_token" = '8a200f1ecaf58b0060a2cab25ba8a3d3', "soundcloud_expires_at" = '2013-07-13 03:12:26.859790', "updated_at" = '2013-07-12 21:12:28.901375' WHERE "users"."id" = 2
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed   in 2750ms
+
+NameError (undefined local variable or method `you' for #<SoundcloudController:0x007fae833fc670>):
+  app/controllers/soundcloud_controller.rb:23:in `connected'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.3ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (5.3ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (12.4ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 18:13:30 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[36mUser Load (2.8ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 22ms
+
+
+Started GET "/soundcloud/connected?code=e2973ac176a887be7ecfca412fb3dd99" for 127.0.0.1 at 2013-07-12 18:13:33 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"e2973ac176a887be7ecfca412fb3dd99"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1[0m
+  [1m[35mAREL (0.4ms)[0m  UPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-60703a1052490b5', "soundcloud_refresh_token" = '6cebffbc5e42339e34064da92e942e57', "soundcloud_expires_at" = '2013-07-13 03:13:34.170986', "updated_at" = '2013-07-12 21:13:36.204094' WHERE "users"."id" = 2
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed   in 2310ms
+
+NameError (undefined local variable or method `welcome' for #<SoundcloudController:0x007fae85289fe8>):
+  app/controllers/soundcloud_controller.rb:23:in `connected'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.3ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (5.6ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (12.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-07-12 18:13:39 -0300
+  Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+Rendered welcome/index.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 18ms (Views: 8.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 18:15:06 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 36ms
+
+
+Started GET "/soundcloud/connected?code=df174ed0e48f53b1beff640e35360a13" for 127.0.0.1 at 2013-07-12 18:15:09 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"df174ed0e48f53b1beff640e35360a13"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1
+  [1m[36mAREL (0.6ms)[0m  [1mUPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-a9752df9bc451e6', "soundcloud_refresh_token" = 'b45b1da1778b89c7cd12d4123c355509', "soundcloud_expires_at" = '2013-07-13 03:15:09.525718', "updated_at" = '2013-07-12 21:15:11.521414' WHERE "users"."id" = 2[0m
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed   in 2317ms
+
+NameError (undefined local variable or method `welcome' for #<SoundcloudController:0x007fae82e29e50>):
+  app/controllers/soundcloud_controller.rb:23:in `connected'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.3ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (5.1ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (12.2ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 18:17:39 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 15ms
+
+
+Started GET "/soundcloud/connected?code=1992af247aa0efac52781b717d4b8fa1" for 127.0.0.1 at 2013-07-12 18:17:43 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"1992af247aa0efac52781b717d4b8fa1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mUPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-ca361c4485aa628', "soundcloud_refresh_token" = '112a4f4eb0a46ce3a33ef8afd99cb064', "soundcloud_expires_at" = '2013-07-13 03:17:43.563119', "updated_at" = '2013-07-12 21:17:45.559106' WHERE "users"."id" = 2[0m
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed 200 OK in 2291ms (Views: 2.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/soundcloud/disconnect" for 127.0.0.1 at 2013-07-12 18:17:50 -0300
+  Processing by SoundcloudController#disconnect as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Redirected to http://localhost:3000/
+Completed   in 11ms
+
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  app/controllers/soundcloud_controller.rb:28:in `disconnect'
+
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.2ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (4.6ms)
+Rendered vendor/bundle/gems/actionpack-3.0.4/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (11.2ms)
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 18:22:08 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=self
+Completed 302 Found in 58ms
+
+
+Started GET "/soundcloud/connect" for 127.0.0.1 at 2013-07-12 18:27:24 -0300
+  Processing by SoundcloudController#connect as HTML
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Redirected to https://soundcloud.com/connect?response_type=code_and_token&client_id=a4e5baea6fd927f45189f90101814ed9&redirect_uri=http://localhost:3000/soundcloud/connected&display=popup
+Completed 302 Found in 24ms
+
+
+Started GET "/soundcloud/connected?code=442f003cc7a3af96ef6f34ec3c59f1f0" for 127.0.0.1 at 2013-07-12 18:27:29 -0300
+  Processing by SoundcloudController#connected as HTML
+  Parameters: {"code"=>"442f003cc7a3af96ef6f34ec3c59f1f0"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."soundcloud_user_id" = 23200247 LIMIT 1
+  [1m[36mAREL (0.4ms)[0m  [1mUPDATE "users" SET "soundcloud_access_token" = '1-45623-23200247-9d0f4506178d2d5', "soundcloud_refresh_token" = 'c9c308db2437541918a6e06b46446751', "soundcloud_expires_at" = '2013-07-13 03:27:30.083159', "updated_at" = '2013-07-12 21:27:32.247092' WHERE "users"."id" = 2[0m
+Rendered soundcloud/connected.html.erb (0.4ms)
+Completed 200 OK in 3141ms (Views: 2.4ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:28:42 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/show.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 3206ms (Views: 14.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:31:36 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (21.5ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Rendered welcome/show.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 2912ms (Views: 9.9ms | ActiveRecord: 21.5ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:35:32 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (20.6ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/show.html.erb within layouts/application (7.8ms)
+Completed 200 OK in 3222ms (Views: 14.9ms | ActiveRecord: 20.6ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:37:14 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (22.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Rendered welcome/show.html.erb within layouts/application (4.4ms)
+Completed 200 OK in 2729ms (Views: 9.1ms | ActiveRecord: 22.1ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:40:16 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (16.5ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/show.html.erb within layouts/application (6.7ms)
+Completed 200 OK in 3085ms (Views: 13.4ms | ActiveRecord: 16.5ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:45:14 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (20.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Rendered welcome/show.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 2846ms (Views: 9.5ms | ActiveRecord: 20.1ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:48:41 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (16.8ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/show.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 2571ms (Views: 8.3ms | ActiveRecord: 16.8ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:51:55 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (18.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Rendered welcome/show.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 3191ms (Views: 26.7ms | ActiveRecord: 18.0ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:53:45 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/show.html.erb within layouts/application (4.4ms)
+Completed 200 OK in 2660ms (Views: 9.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:55:47 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+Rendered welcome/show.html.erb within layouts/application (28.2ms)
+Completed 200 OK in 3274ms (Views: 71.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/you" for 127.0.0.1 at 2013-07-12 18:58:04 -0300
+  Processing by WelcomeController#show as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1
+Rendered welcome/show.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 2741ms (Views: 16.0ms | ActiveRecord: 0.2ms)

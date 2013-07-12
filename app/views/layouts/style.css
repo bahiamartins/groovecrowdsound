@@ -1,0 +1,35 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+	padding-top: 60px;
+  	padding-bottom: 40px;
+  	/*background: url('assets/img/bg.png') #fff;
+  	background-size: 1440px 800px;
+  	background-repeat:no-repeat;
+  	display: compact;*/
+}
+
+/*Social Icons*/
+.social-icons {
+	margin:0;
+}
+.social-icons li {
+	float:left;
+	display:inline;
+	list-style:none;
+	margin-right:5px;
+	margin-bottom:5px;
+	text-indent:-9999px;
+}
+.social-icons li a, a.social-icon {
+	width:28px;
+	height:28px;
+	display:block;
+	background-position:0 -38px;
+}
+
+.social_facebook {background: url(../img/facebook.png) }
+.social_googleplus {background: url(../img/googleplus.png);}
+.social_twitter {background: url(../img/twitter.png);}
+
